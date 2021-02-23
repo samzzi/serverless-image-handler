@@ -121,9 +121,8 @@ class ImageRequest {
      * @return {Promise} - The original image or an error.
      */
     async getOriginalImage(bucket, key) {
-        key = key.replace('x/', 'x0/');
-
         const imageLocation = { Bucket: bucket, Key: key };
+
         try {
             const originalImage = await this.s3.getObject(imageLocation).promise();
 
@@ -242,7 +241,7 @@ class ImageRequest {
             return decoded.key;
         }
 
-        if (requestType === "Thumbor" || requestType === "Custom") {
+        if (requestType === "Thumbor" || requestType === "Custom") {``
             let { path } = event;
 
             if (requestType === "Custom") {
@@ -259,7 +258,7 @@ class ImageRequest {
                     path = path.replace(matchPattern, substitution);
                 }
             }
-            return decodeURIComponent(path.replace(/\/(\d+x\d+)\/|filters:[^\)]+|\/fit-in+|^\/+/g, '').replace(/\)/g, '').replace(/^\/+/, ''));
+            return decodeURIComponent(path.replace(/\/((\d+x\d+)|(0x\d+)|(\d+x)|(x\d+))\/|filters:[^\)]+|\/fit-in+|^\/+/g, '').replace(/\)/g, '').replace(/^\/+/, ''));
         }
 
         // Return an error for all other conditions

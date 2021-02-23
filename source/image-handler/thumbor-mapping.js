@@ -26,7 +26,6 @@ class ThumborMapping {
         const filetype = (this.path.split('.'))[(this.path.split('.')).length - 1];
 
         // Process the Dimensions
-        //const dimPath = this.path.match(/\/((\d+x\d+)|(0x\d+))\//g);
         const dimPath = this.path.match(/\/((\d+x\d+)|(0x\d+)|(\d+x)|(x\d+))\//g);
         if (dimPath) {
             // Assign dimenions from the first match only to avoid parsing dimension from image file names
