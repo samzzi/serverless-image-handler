@@ -157,6 +157,28 @@ describe('process()', function() {
             expect(thumborMapping.edits).toEqual(expectedResult.edits);
         });
     });
+    describe('008/resize/heightIsNull', function() {
+        it('Should pass if the proper edit translations are applied and in the correct order', function() {
+            // Arrange
+            const event = {
+                path : "/400x/test-image-001.jpg"
+            }
+            // Act
+            const thumborMapping = new ThumborMapping();
+            thumborMapping.process(event);
+            // Assert
+            const expectedResult = {
+                edits: {
+                    resize: {
+                        width: 400,
+                        height: null,
+                        fit: 'inside'
+                    }
+                }
+            };
+            expect(thumborMapping.edits).toEqual(expectedResult.edits);
+        });
+    });
 });
 
 // ----------------------------------------------------------------------------
