@@ -87,7 +87,7 @@ class ImageRequest {
                     this.outputFormat = outputFormat;
                 }
             }
-            
+
             // Fix quality for Thumbor and Custom request type if outputFormat is different from quality type.
             if (this.outputFormat) {
                 const requestType = ['Custom', 'Thumbor'];
@@ -121,6 +121,8 @@ class ImageRequest {
      * @return {Promise} - The original image or an error.
      */
     async getOriginalImage(bucket, key) {
+        key = key.replace('x/', 'x0/');
+
         const imageLocation = { Bucket: bucket, Key: key };
         try {
             const originalImage = await this.s3.getObject(imageLocation).promise();
@@ -294,7 +296,7 @@ class ImageRequest {
         } catch(error) {
             console.error(error);
             isBase64Encoded = false;
-        } 
+        }
 
         if (matchDefault.test(path) && isBase64Encoded) {  // use sharp
             return 'Default';
@@ -411,7 +413,7 @@ class ImageRequest {
             status: 500,
             code: 'RequestTypeError',
             message: 'The file does not have an extension and the file type could not be inferred. Please ensure that your original image is of a supported file type (jpg, png, tiff, webp, svg). Refer to the documentation for additional guidance on forming image requests.'
-        };   
+        };
     }
 }
 }
